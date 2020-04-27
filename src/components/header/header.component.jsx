@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 
-import { connect } from 'react-redux';
-
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors'
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+
+
+
 
 import './header.styles.scss';
 
@@ -50,9 +57,34 @@ const Header = ({ currentUser, hidden }) => (
 );
 
 
-const mapStateToProps = ({ user: {currentUser}, cart: {hidden} }) => ({
+/***
+ * Old school destructuring
+ * 
+ * const mapStateToProps = ({ user: {currentUser}, cart: {hidden} }) => ({
     currentUser,
     hidden
 })
+***/
+
+/*** 
+ * 1. 1st approach to use selectors
+ * 
+ * const mapStateToProps = (state) => ({
+    currentUser: selectCurrentUser(state),
+    hidden: selectCartHidden(state)
+})
+***/
+
+/*** 
+ * 2. 2nd approach to use selectors - use createstructuredSelectors
+***/
+
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
+}) 
+
+
+
 
 export default connect(mapStateToProps)(Header);
