@@ -12,40 +12,38 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCurrentUser } from '../../redux/user/user.selectors'
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 
-
-
-
-import './header.styles.scss';
+// import './header.styles.scss';
+import {HeaderContainer, LogoContainer, OptionsContainer, OptionLink} from './header.styles';
 
 const Header = ({ currentUser, hidden }) => (
-    <div className="header">
-        <Link className="logo-container" to='/'>
+    <HeaderContainer>
+        <LogoContainer to='/'>
             <Logo className="logo"/>
-        </Link>
+        </LogoContainer>
 
-        <div className="options">
-            <Link className="option" to="/shop">
+        <OptionsContainer>
+            <OptionLink to="/shop">
                 Shop
-            </Link>
+            </OptionLink>
 
-            <Link className="option" to="/contact">
+            <OptionLink to="/contact">
                 Contact
-            </Link>
+            </OptionLink>
 
             {
                 currentUser ? (
-                    <div className="option" onClick={() => auth.signOut()}>
+                    <OptionLink as='div' onClick={() => auth.signOut()}>
                         Sign Out
-                    </div> 
+                    </OptionLink> 
                 ) : (
-                    <Link className="option" to="/signin">
+                    <OptionLink to="/signin">
                         Sign In
-                    </Link>
+                    </OptionLink>
                 )
             }
 
             <CartIcon />
-        </div>
+        </OptionsContainer>
 
         {/* Cart dropdown sits just below options div */}
         {/* dynamically render cart dropdown based on hidden value */}
@@ -53,7 +51,7 @@ const Header = ({ currentUser, hidden }) => (
         { hidden ? null : <CartDropdown />}
 
 
-    </div>
+    </HeaderContainer>
 );
 
 
